@@ -8,18 +8,3 @@ Begin
 End;
 /
 
- 
-
-
-
-
-CREATE OR REPLACE FUNCTION get_GoldCustShippingFee
-RETURN Integer IS
-    tmp Integer := 0;
-BEGIN
-    SELECT ShippingFee into tmp
-    from CustOrder
-    Where ( Select CustId from Customer  C Where C.CustType = 'Gold')= CustId;
-    return tmp;
-END;
-/
