@@ -1,0 +1,17 @@
+
+Error starting at line : 4 in command -
+CREATE TABLE StoreItems (
+    StoreItemsId Integer PRIMARY KEY,
+    ItemId Integer REFERENCES Item(ItemId),
+    Price Float,
+    ItemType VARCHAR(20),
+    NumberOfCopies Integer  CHECK (NumberOfCopies >= 0)
+)
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table ITEM created.
+
