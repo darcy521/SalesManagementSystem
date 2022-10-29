@@ -35,7 +35,7 @@ CREATE OR REPLACE FUNCTION createCustOrder(CustId IN Integer) RETURN Integer IS
         orderid := OrderId_seq.nextVal;
         today := SYSDATE;
         INSERT INTO CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) 
-            values (CustId, orderid, today, NULL, NULL);
+            values (CustId, orderid, today, NULL, 10);
         RETURN orderid;
     END;
 /

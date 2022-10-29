@@ -1,5 +1,14 @@
 Spool Table_Output;
 
+-- Item
+CREATE TABLE Item (
+    ItemId Integer PRIMARY KEY,
+    Title VARCHAR(25),
+    PublishDate Date,
+    StudioName VARCHAR(25),
+    Description VARCHAR(50)
+);
+
 -- StoreItems
 CREATE TABLE StoreItems (
     StoreItemsId Integer PRIMARY KEY,
@@ -9,35 +18,21 @@ CREATE TABLE StoreItems (
     NumberOfCopies Integer  CHECK (NumberOfCopies >= 0)
 );
 
--- Item
-CREATE TABLE Item (
-    ItemId Integer PRIMARY KEY,
-    Title VARCHAR(25),
-    PublishDate Date,
-    StudioName VARCHAR(25),
-    Description VARCHAR(25)
+--Customer
+CREATE TABLE Customer (
+    CustId Integer PRIMARY KEY,
+    Name VARCHAR(20),
+    CustType VARCHAR(10),
+    Email VARCHAR(20) UNIQUE NOT NULL,
+    Address VARCHAR(50)
 );
 
---OrderLineItem
-CREATE TABLE OrderLineItem (
-    OrderId Integer REFERENCES CustOrder(OrderId),
-    LineId Integer PRIMARY KEY,
-    StoreItemsId Integer REFERENCES StoreItems(StoreItemsId),
-    Quantity Integer
-    --， CHECK (Quantity <=  get_NumberOfCopies(StoreItemsId))
+--Gold Customer
+CREATE TABLE GoldCustomer (
+    CustId Integer REFERENCES Customer(CustId),
+    DateJoined Date,
+    Coupons VARCHAR(20)
 );
---This function use to select the quantity of storeItems
--- CREATE OR REPLACE FUNCTION get_NumberOfCopies (n in Integer )
--- Return Integer IS
---     tmp Integer := 0;
--- Begin
---     Select NumberOfCopies into tmp 
---     from StoreItems si Where si.StoreItemsId = n;
---     Return tmp;
--- End;
--- /
-
--- Drop function get_NumberOfCopies;
 
 --CustOrder
 CREATE TABLE CustOrder (
@@ -61,25 +56,30 @@ CREATE TABLE CustOrder (
 -- END;
 -- /
 
---Customer
-CREATE TABLE Customer (
-    CustId Integer PRIMARY KEY,
-    Name VARCHAR(20),
-    CustType VARCHAR(10),
-    Email VARCHAR(20) UNIQUE NOT NULL,
-    Address VARCHAR(50)
+--OrderLineItem
+CREATE TABLE OrderLineItem (
+    OrderId Integer REFERENCES CustOrder(OrderId),
+    LineId Integer PRIMARY KEY,
+    StoreItemsId Integer REFERENCES StoreItems(StoreItemsId),
+    Quantity Integer
 );
+    --， CHECK (Quantity <=  get_NumberOfCopies(StoreItemsId))
+--This function use to select the quantity of storeItems
+-- CREATE OR REPLACE FUNCTION get_NumberOfCopies (n in Integer )
+-- Return Integer IS
+--     tmp Integer := 0;
+-- Begin
+--     Select NumberOfCopies into tmp 
+--     from StoreItems si Where si.StoreItemsId = n;
+--     Return tmp;
+-- End;
+-- /
 
-ALTER TABLE Customers
-ADD Address VARCHAR(50) NOT NULL;
+-- Drop function get_NumberOfCopies;
 
 
 
---Gold Customer
-CREATE TABLE GoldCustomer (
-    CustId Integer REFERENCES Customer(CustId),
-    DateJoined Date,
-    Coupons VARCHAR(20)
-);
+
+
 
 Select * from CustOrder;

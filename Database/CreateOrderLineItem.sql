@@ -5,9 +5,8 @@ CREATE SEQUENCE LineId_seq
     MAXVALUE 99999999
     CYCLE;
 
-
-CREATE PROCEDURE createOrderLineItem(custOrderId in Integer, StoreItemsId in Integer,
-customerId in Integer, dataOrdered in Date, numberOrdered in Integer, shippedDate in Date)
+CREATE OR REPLACE PROCEDURE createOrderLineItem(custOrderId in Integer, storeitems_id in Integer,
+customerId in Integer, dateOrdered in Date, numberOrdered in Integer, shippedDate in Date)
 IS
     tmp Integer := 0;
     CustTypeTmp VARCHAR(10);
@@ -15,7 +14,7 @@ IS
     OdrId Integer;
 Begin
     Select NumberOfCopies into tmp
-    from StoreItems si Where si.StoreItemsId = StoreItemsId;
+    from StoreItems Where StoreItemsId = storeitems_id;
 --    Do not forget to display error message on front-end!
 --If number of item ordered > stock -> display error and exit
     IF (numberOrdered > tmp) THEN
@@ -32,10 +31,9 @@ Begin
         ShippingFee := 10;
     END IF;
 
-    Select OrderId into OdrId
-    From CustOrder Where customerId = custorder.CustId;
-
     INSERT INTO OrderLineItem(LineId, StoreItemsId, Quantity, OrderId) 
-    values (LineId_seq.NEXTVAL, StoreItemsId, numberOrdered,OdrId);
+    values (LineId_seq.NEXTVAL, storeitems_id, numberOrdered,custOrderId);
 End;
 /
+
+execute createOrderLineItem(10000001, 112, 2, SYSDATE, 300, SYSDATE);
