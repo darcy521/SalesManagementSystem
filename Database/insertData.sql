@@ -69,3 +69,7 @@ insert into Customer(CustId, CustType, Name, Email, Address) values (10, 'Regula
 -- GoldCustomer
 insert into GoldCustomer(CustId, DateJoined, Coupons) values (1, '26-Oct-2022', '40OFF');
 insert into GoldCustomer(CustId, DateJoined, Coupons) values (2, '26-Oct-2022', '40OFF');
+
+
+-- tests 
+insert into CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) values (1, 2, '26-Oct-2022', '26-Oct-2021', NULL);
