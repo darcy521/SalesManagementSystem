@@ -32,8 +32,12 @@ Begin
     END IF;
 
     INSERT INTO OrderLineItem(LineId, StoreItemsId, Quantity, OrderId) 
-    values (LineId_seq.NEXTVAL, storeitems_id, numberOrdered,custOrderId);
+    values (LineId_seq.NEXTVAL, storeitems_id, numberOrdered, custOrderId);
+    
+    Update StoreItems
+    Set NumberOfCopies = NumberOfCopies - numberOrdered
+    Where StoreItemsId = StoreItems_id;
 End;
 /
 
-execute createOrderLineItem(10000001, 112, 2, SYSDATE, 300, SYSDATE);
+execute createOrderLineItem(2, 112, 2, SYSDATE, 3, SYSDATE);

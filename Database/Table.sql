@@ -42,6 +42,9 @@ CREATE TABLE CustOrder (
     ShippedDate Date,
     ShippingFee Integer
 );
+
+Alter table CustOrder 
+add check (ShippedDate >= DateOfOrder);
 -- ALTER TABLE CustOrder
 -- ADD CONSTRAINT check_ShippingFee CHECK (get_GoldCustShippingFee() in 0);
 
@@ -77,9 +80,14 @@ CREATE TABLE OrderLineItem (
 
 -- Drop function get_NumberOfCopies;
 
-
-
-
-
+Select * from StoreItems;
 
 Select * from CustOrder;
+Delete from CustOrder 
+Where CustId = 3;
+
+Select * from Customer;
+
+Select * from OrderLineItem;
+Delete from OrderLineItem 
+Where OrderID = 2;
