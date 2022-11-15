@@ -6,10 +6,11 @@
 CREATE OR REPLACE Function computeTotal(OrderId IN Integer)
 return Float
 IS
-    Total Float;
-    Num_OrderLineItems Integer;
-    Num_StoreItems Integer;
-    
+    Total Float := 0;
+    Cust_Id Integer;
+--    Num_OrderLineItems Integer;
+--    Num_StoreItems Integer;
+
     CURSOR v_OrderLineItem is
     Select StoreItemsId, Quantity
     From OrderLineItem Odr
@@ -19,23 +20,39 @@ IS
     Select * From StoreItems;
     
 Begin
-    SELECT COUNT(*) into Num_OrderLineItems
-    FROM OrderLineItem;
-    
-    SELECT COUNT(*) into Num_StoreItems
-    FROM StoreItems;
-
-    For v_OrderLineItem in 0..Num_OrderLineItems LOOP
-        For v_StoreItems in 0..Num_StoreItems Loop
-            if (v_OrderLineItem.StoreItemsId = v_StoreItems.StoreItemsId) Then
-            Total := total + v_StoreItems.Price * v_OrderLineItem.Quantity;
+--    two for-loop to calculate total price
+    For OrderLineItem_tmp in v_OrderLineItem LOOP
+        For StoreItems_tmp in v_StoreItems LOOP
+            if (OrderLineItem_tmp.StoreItemsId = StoreItems_tmp.StoreItemsId) Then
+            Total := Total + StoreItems_tmp.Price * OrderLineItem_tmp.Quantity;
             continue;
             End if;
         End loop;
     End loop;
+    
+--    add 5% tax
+    Total := Total * 1.05;
+    Select CustType into Cust_Id 
+    from Customer
+    Where CustId = (Select CustId from CustOrder C Where C.OrderId = OrderId);
+--    check if order is placed by a gold customer and total >= 100
+    If (Cust_Id = 'Gold' And Total >= 100) Then
+        Total := Total * 0.9;
+    End If;
+    
+    dbms_output.put_line('Total price has been calculated, Total price of OrderId ' || orderid 
+    || ' is : $' || total);
     Return Total;
+    
 End;
 /
 
+--test function
+DECLARE
+    result float;
+Begin
+    result := ComputeTotal(4);
+    
+End;
+/
 
-alter session set nls_numeric_characters='.,';

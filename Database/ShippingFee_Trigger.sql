@@ -31,17 +31,19 @@ Begin
 --    from Customer C 
 --    Where C.CustType = 'Gold') in Customer.CustId
     
-    For Cust_id_Gold in Cust_Order_Gold Loop
-        Update CustOrder
-        Set ShippingFee = 0 
-        Where CustId = Cust_id_Gold.CustId;
-    End Loop;
-    
-    For Cust_id_Regular in Cust_Order_Regular Loop
-        Update CustOrder
-        Set ShippingFee = 10 
-        Where CustId = Cust_id_Regular.CustId;
-    End Loop;
+    If (:new.CustType = 'Gold') Then
+        For Cust_id_Gold in Cust_Order_Gold Loop
+            Update CustOrder
+            Set ShippingFee = 0 
+            Where CustId = Cust_id_Gold.CustId;
+        End Loop;
+    Elsif (:new.CustType = 'Regular') Then
+        For Cust_id_Regular in Cust_Order_Regular Loop
+            Update CustOrder
+            Set ShippingFee = 10 
+            Where CustId = Cust_id_Regular.CustId;
+        End Loop;
+    End if;
     commit;
             
 End;
