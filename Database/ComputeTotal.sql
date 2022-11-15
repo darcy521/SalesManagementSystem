@@ -7,7 +7,7 @@ CREATE OR REPLACE Function computeTotal(OrderId IN Integer)
 return Float
 IS
     Total Float := 0;
-    Cust_Id Integer;
+    Cust_Type varchar(15);
 --    Num_OrderLineItems Integer;
 --    Num_StoreItems Integer;
 
@@ -31,13 +31,15 @@ Begin
     End loop;
     
 --    add 5% tax
-    Total := Total * 1.05;
-    Select CustType into Cust_Id 
+    Total := Total *  1.05;
+    Select CustType into Cust_Type 
     from Customer
-    Where CustId = (Select CustId from CustOrder C Where C.OrderId = OrderId);
+    Where CustId = (Select distinct CustId from CustOrder C Where C.OrderId = OrderId);
 --    check if order is placed by a gold customer and total >= 100
-    If (Cust_Id = 'Gold' And Total >= 100) Then
+    If (Cust_Type = 'Gold' And Total >= 100.00) Then
         Total := Total * 0.9;
+        dbms_output.put_line('You are Gold Customer and total is larger than or equal to $100
+        , thus we offer you 10% off in this order');
     End If;
     
     dbms_output.put_line('Total price has been calculated, Total price of OrderId ' || orderid 

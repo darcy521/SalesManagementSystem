@@ -83,11 +83,12 @@ CREATE TABLE OrderLineItem (
 Select * from StoreItems;
 
 Select * from CustOrder;
-Delete from CustOrder 
-Where CustId = 3;
+--Delete from CustOrder 
+--Where CustId = 3;
 
 Select * from Customer;
+Select * from GoldCustomer;
 
 Select * from OrderLineItem;
-Delete from OrderLineItem 
-Where OrderID = 2;
+--Delete from OrderLineItem 
+--Where OrderID = 2;

@@ -76,5 +76,9 @@ insert into CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) va
 
 --test ShippingFee_Trigger
 update Customer
+set CustType = 'Gold'
+where CustId = 3;
+
+update Customer
 set CustType = 'Regular'
 where CustId = 3;
