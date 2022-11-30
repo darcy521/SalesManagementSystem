@@ -81,7 +81,7 @@ CREATE TABLE OrderLineItem (
 -- Drop function get_NumberOfCopies;
 
 Select * from StoreItems;
-
+Select * from Item;
 Select * from CustOrder;
 --Delete from CustOrder 
 --Where CustId = 3;
