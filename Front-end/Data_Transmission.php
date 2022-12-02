@@ -5,13 +5,13 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!-- <script src="jquery-3.6.1.min.js"></script> -->
-    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
       <title>MasterRobot Bookstore</title>
    </head>
    <body>
+        <div class="storeItems">
         <!-- This form shows storeItems -->
         <h3>Show StoreItems</h3>
-        
         <form name="createCustOrder-form" method="post" action="http://localhost/data_transmission.php?show=true">
             <input type="submit" name="submit" value="show">
             <?php 
@@ -22,6 +22,9 @@
         </form>
         <form method="POST" action="http://localhost/data_transmission.php">
         <input type="submit" value="close"></form>
+        </div>
+
+        <div class="createCustOrder">
          <!-- This form create customer order -->
         <form name="createCustOrder-form" method="post" action="http://localhost/data_transmission.php?createNewOrder=true">
             <h3>Create New Order</h3>
@@ -40,7 +43,9 @@
                 }
             ?>
         </form>
+        </div>
 
+        <div class="createOrderLineItem">
         <!-- This form create orderLineItem-->
         <form name="createOrderLineItem-form" method="post" action="http://localhost/data_transmission.php?createOrderLineItem=true">
             <h3>Create Order Line Item</h3>
@@ -51,15 +56,17 @@
             <div>
                 <label>StoreItems ID</label>
                 <input type="text" name="storeItemsID-createOrderLine" placeholder="Please enter StoreItems ID" required>
+            </div>
+            <div>
                 <label>Number</label>
                 <input type="text" name="numberOrdered-createOrderLine" placeholder="Number you want to buy" required>
-            </div>
+                </div>
             <div>
                 <label>Customer ID</label>
                 <input type="text" name="customerId-createOrderLine" placeholder="Please enter your ID" required>
             </div>
             <div>
-                <div style="display: flex;">
+                <div style="display: flex; justify-content: center;">
                 <label>Order Date: </label>
                 <!-- <input type="date" name= "OrderDate-createOrderLine"value="<?php echo date('Y-m-d'); ?>" > -->
                 <div id="current_date">
@@ -72,8 +79,8 @@
                     </script>
                 </div>
                 </div>
-            <div>
-                <div style="display: flex;">
+            
+                <div style="display: flex; justify-content: center;">
                 <label>ShippedDate: Anticipate </label>
                     <div id="current_date_2">
                     <script>
@@ -96,7 +103,9 @@
                 }
             ?>
         </form>
+        </div>
 
+        <div class="setShippingDate">
         <!-- This form sets Shipping Date -->
         <form name="setShippingDate-form" method="post" action="http://localhost/data_transmission.php?set=true">
             <h3>Set Shipping Date</h3>
@@ -120,7 +129,9 @@
                 }
             ?>
         </form>
+        </div>
 
+        <div class="orderItems">
         <!-- This form shows ordered Items -->
         <form name = "orderItems-form" method="post" action="">
             <h3>Show Ordered Items</h3>
@@ -133,7 +144,9 @@
             <!-- not implement yet -->
             <input type="submit" name="submit" value="Submit">
         </form>
+        </div>
 
+        <div class="showCustOrder">
         <!-- This form shows customer order history by customer ID and Order Date -->
         <form name="custOrder-form" method="post" action="">
             <h3>Show Customer Order history</h3>
@@ -151,21 +164,7 @@
             <!-- not implement yet -->
             <input type="submit" name="submit" value="Submit">
         </form>
-
-        <?php
-        // Create connection to Oracle
-        $conn = oci_pconnect("c##123", "123", "//localhost/xe");
-        if (!$conn) {
-        $m = oci_error();
-        echo $m['message'], "\n";
-        exit;
-        }
-        else {
-        print "Connected to Oracle!";
-        }
-        // Close the Oracle connection
-        oci_close($conn);
-        ?>
+        </div>
 
    </body>
 </html>
@@ -310,21 +309,21 @@ function setShippingDate(){
         exit;
     }		
 
-    $sql = "call setShippingDate(:id, :sdate)";
+    $sql = "call setShippingDate(:id, to_date('12-Dec-22', 'DD-Mon-RR'))";
     $stmt = oci_parse($conn,$sql);
     
      // Assign a value to the input 
      $OrderId = $_POST['orderId-setShippingDate'];
      echo $_POST['ShippedDate'], "\n<br>";
      echo date('d-M-y', strtotime($_POST['ShippedDate']));
-     $sdate = date('d-M-y', strtotime($_POST['ShippedDate']));
+    //  $sdate = strval(date('d-M-y', strtotime($_POST['ShippedDate'])));
      
     //  $dateOrdered = date('d-M-Y', strtotime($_POST['OrderDate-createOrderLine']));
     //  $shippedDate = date('d-M-Y',strtotime("+1 day", strtotime($dateOrdered)));
 
     // Bind the input parameter
     oci_bind_by_name($stmt,':id',$OrderId,15);
-    oci_bind_by_name($stmt,':sdate',$sdate,15);
+    // oci_bind_by_name($stmt,':sdate',$sdate,15);
     
     if (oci_execute($stmt)){
     // output order information
@@ -335,7 +334,7 @@ function setShippingDate(){
         echo "</tr>";	
         echo "<tr>";
             echo "<td>$OrderId</td>";
-            echo "<td>$sdate</td>";
+            // echo "<td>$sdate</td>";
             echo "</tr>";
     echo "</table>";
     print "Successfully set Shipping Date! \n";

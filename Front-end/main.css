@@ -1,0 +1,116 @@
+body{
+    background-image: url(bookstore.jpg);
+    opacity: 1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: fit-content;
+    text-align: center;
+    border: 3px solid white;
+}
+
+label{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.storeItems{
+    border: 2px solid whitesmoke;
+    margin: auto;
+    width: 60%;
+    background-color: rgb(222, 184, 135);
+    opacity: 0.9;
+}
+
+.createCustOrder{
+    border: 2px solid whitesmoke;
+    margin: auto;
+    width: 60%;
+    background-color: rgb(222, 184, 135);
+    opacity: 0.9;
+}
+
+.createOrderLineItem{
+    border: 2px solid whitesmoke;
+    margin: auto;
+    width: 60%;
+    background-color: rgb(222, 184, 135);
+    opacity: 0.9;
+}
+
+.setShippingDate{
+    border: 2px solid whitesmoke;
+    margin: auto;
+    width: 60%;
+    background-color: rgb(222, 184, 135);
+    opacity: 0.9;
+}
+
+.orderItems{
+    border: 2px solid whitesmoke;
+    margin: auto;
+    width: 60%;
+    background-color: rgb(222, 184, 135);
+    opacity: 0.9;
+}
+
+.showCustOrder{
+    border: 2px solid whitesmoke;
+    margin: auto;
+    width: 60%;
+    background-color: rgb(222, 184, 135);
+    opacity: 0.9;
+}
+
+.glow-on-hover {
+    /* background-color: rgb(141, 182, 141); */
+    background-color: lightgrey;
+        border: none;
+        color: black;
+        padding: 6px 12px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
