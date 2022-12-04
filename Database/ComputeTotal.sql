@@ -42,11 +42,11 @@ End;
 /
 
 ----test function
---DECLARE
---    result float;
---Begin
---    result := computeTotal(5);
---    DBMS_OUTPUT.PUT_LINE('result of compute total is: ' || result);
---End;
---/
+DECLARE
+   result float;
+Begin
+   result := computeTotal(10000000);
+   DBMS_OUTPUT.PUT_LINE('result of compute total is: ' || result);
+End;
+/
 

@@ -18,10 +18,17 @@ CREATE OR REPLACE FUNCTION createCustOrder(CustId IN Integer) RETURN Integer IS
 show errors;
 
 -- executing the function
---DECLARE
+-- DECLARE
 --    res Integer;
---BEGIN
+-- BEGIN
 --    res := createCustOrder(1);
 --    dbms_output.put_line('result from ceateCustOrder: ' || res);
---END;
---/
+-- END;
+-- /
+
+DECLARE
+   res Integer;
+BEGIN
+   res := createCustOrder(4);
+END;
+/

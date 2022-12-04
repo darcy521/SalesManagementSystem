@@ -1,6 +1,8 @@
 Team members: </br>
 Honglin Chen, Jinming Nian  </br> </br>
 
+Note that "computeTotal" is not directly shown in the demo, but it is used in "ShowItemOrders" </br> </br>
+
 All constraints in 1.1 are fully implemented 
 
 - a. custType constraints are implemented in Customer table creation in Table.sql 
