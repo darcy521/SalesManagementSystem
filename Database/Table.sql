@@ -73,7 +73,10 @@ CREATE TABLE fullDetailTable(
 --select * from fulldetailtable;
 --Select * from StoreItems;
 --Select * from Item;
---Select * from CustOrder;
---Select * from Customer;
+Select * from CustOrder;
+Select * from Customer;
+update Customer
+Set CustType = 'Gold'
+Where custId = 5;
 --Select * from GoldCustomer;
---Select * from OrderLineItem;
+Select * from OrderLineItem;
