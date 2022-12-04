@@ -66,6 +66,18 @@ label{
     /* background-color: rgb(141, 182, 141); */
     background-color: lightgrey;
         border: none;
+        color: white;
+        padding: 6px 12px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+}
+
+.glow {
+    /* background-color: rgb(141, 182, 141); */
+    background-color: blue;
+        border: none;
         color: black;
         padding: 6px 12px;
         text-decoration: none;
@@ -74,7 +86,7 @@ label{
         border-radius: 10px;
 }
 
-.glow-on-hover:before {
+.glow:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
     position: absolute;
@@ -91,19 +103,19 @@ label{
     border-radius: 10px;
 }
 
-.glow-on-hover:active {
+.glow:active {
     color: #000
 }
 
-.glow-on-hover:active:after {
+.glow:active:after {
     background: transparent;
 }
 
-.glow-on-hover:hover:before {
+.glow:hover:before {
     opacity: 1;
 }
 
-.glow-on-hover:after {
+.glow:after {
     z-index: -1;
     content: '';
     position: absolute;

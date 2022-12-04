@@ -144,7 +144,7 @@
 
         <div class="orderItems">
         <!-- This form shows ordered Items -->
-        <form name = "orderItems-form" method="post" action="">
+        <form name = "orderItems-form" method="post" action="showOrderItems.php">
             <h3>Show Ordered Items</h3>
             <div>
             <label>OrderID </label>
@@ -159,7 +159,7 @@
 
         <div class="showCustOrder">
         <!-- This form shows customer order history by customer ID and Order Date -->
-        <form name="custOrder-form" method="post" action="">
+        <form name="custOrder-form" method="post" action="showCustOrderHistory.php">
             <h3>Show Customer Order history</h3>
             <div>
                 <label>Customer ID</label>
@@ -202,7 +202,7 @@ function showTypes(){
                 echo "<td>NumberOfCopies</td>";
             echo "</tr>";
             
-        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+        while (($row = oci_fetch_array($query)) != false) {		
             echo "<tr>";
                 echo "<td>$row[0]</td>";
                 echo "<td>$row[1]</td>";
@@ -227,7 +227,7 @@ function showTypes(){
                 echo "<td>Shipping Fee</td>";
             echo "</tr>";
             
-        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+        while (($row = oci_fetch_array($query)) != false) {		
             echo "<tr>";
                 for ($i = 0; $i <= 4; $i++){
                     if (!empty($row[$i])){
@@ -267,7 +267,7 @@ function showTypes(){
                 echo "<td>Description</td>";
             echo "</tr>";
             
-        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+        while (($row = oci_fetch_array($query)) != false) {		
             echo "<tr>";
                 echo "<td>$row[0]</td>";
                 echo "<td>$row[1]</td>";
@@ -292,7 +292,7 @@ function showTypes(){
                 echo "<td>Address</td>";
             echo "</tr>";
             
-        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+        while (($row = oci_fetch_array($query)) != false) {		
             echo "<tr>";
                 echo "<td>$row[0]</td>";
                 echo "<td>$row[1]</td>";
@@ -315,7 +315,7 @@ function showTypes(){
                 echo "<td>Coupons</td>";
             echo "</tr>";
             
-        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+        while (($row = oci_fetch_array($query)) != false) {		
             echo "<tr>";
                 echo "<td>$row[0]</td>";
                 echo "<td>$row[1]</td>";
@@ -337,7 +337,7 @@ function showTypes(){
                 echo "<td>Quantity</td>";
             echo "</tr>";
             
-        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+        while (($row = oci_fetch_array($query)) != false) {		
             echo "<tr>";
                 echo "<td>$row[0]</td>";
                 echo "<td>$row[1]</td>";
@@ -348,7 +348,7 @@ function showTypes(){
         echo "</table>";
     }
     
-    OCILogoff($conn);	
+    oci_close($conn);	
 }
 function createNewOrder(){
     $conn=oci_connect("c##123", "123", "//localhost/xe", "UTF8");
@@ -382,7 +382,7 @@ function createNewOrder(){
 
     oci_commit($conn);
     }
-    OCILogoff($conn);
+    oci_close($conn);
 }
 
 
@@ -417,7 +417,7 @@ function createOrderLineItem(){
     // check if the number ordered is larger than stock
     $query = oci_parse($conn, "SELECT NumberOfCopies FROM StoreItems WHERE StoreItemsId = $storeitems_id");
     oci_execute($query);
-    $row = oci_fetch_array($query, OCI_BOTH);
+    $row = oci_fetch_array($query);
     if ($row[0] < $numberOrdered){
         print "Number of item Ordered is larger than stock, bookstore only has ";
         echo $row[0], "\ncopy/copies<br>";
@@ -443,7 +443,7 @@ function createOrderLineItem(){
 
     oci_commit($conn);
     }
-    OCILogoff($conn);
+    oci_close($conn);
 }
 
 function setShippingDate(){
@@ -491,7 +491,7 @@ function setShippingDate(){
 
     oci_commit($conn);
     }
-    OCILogoff($conn);
+    oci_close($conn);
 }
 
 ?>

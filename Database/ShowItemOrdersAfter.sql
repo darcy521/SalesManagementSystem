@@ -70,7 +70,7 @@ Begin
                 insert into fulldetailtable(CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_Email, CUSTOMER_Address,
                 O_ID, ORDER_DATE, ORDER_SHIPPED_DATE, Item_StoreItemId, Item_Title, Item_Quantity,
                 Item_TYPE, Item_Price, Item_Total, PAYMENT_RAW, PAYMENT_TAX, PAYMENT_SHIPPING, PAYMENT_DISCOUNT, PAYMENT_TOTAL)
-                values (cid, cname, cemail, caddress, order_id, odate, oshippeddate, istoreitemid, 
+                values (cid, cname, cemail, caddress, oid_temp.OrderId, odate, oshippeddate, istoreitemid, 
                 ititle, iquantity, itype, iprice, itotal, praw, ptax, pshippingfee, pdiscount,ptotal);
             End LOOP;
         End;
