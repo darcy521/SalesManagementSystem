@@ -20,7 +20,7 @@ CREATE TABLE StoreItems (
 CREATE TABLE Customer (
     CustId Integer PRIMARY KEY,
     Name VARCHAR(20),
-    CustType VARCHAR(10),
+    CustType VARCHAR(10) CHECK (CustType = 'Gold' or CustType = 'Regular'),
     Email VARCHAR(20) UNIQUE NOT NULL,
     Address VARCHAR(50)
 );
@@ -37,12 +37,9 @@ CREATE TABLE CustOrder (
     CustId Integer REFERENCES Customer(CustId),
     OrderId Integer PRIMARY KEY,
     DateOfOrder Date,
-    ShippedDate Date,
+    ShippedDate Date CHECK (ShippedDate >= DateOfOrder),
     ShippingFee Integer
 );
-
-Alter table CustOrder 
-add check (ShippedDate >= DateOfOrder);
 
 --OrderLineItem
 CREATE TABLE OrderLineItem (
