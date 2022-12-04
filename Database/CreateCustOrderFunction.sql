@@ -4,14 +4,19 @@ create sequence OrderId_seq
     increment by 1 nocycle noorder;
 
 -- the function
-CREATE OR REPLACE FUNCTION createCustOrder(CustId IN Integer) RETURN Integer IS
+CREATE OR REPLACE FUNCTION createCustOrder(cust_id IN Integer) RETURN Integer IS
     orderid Integer;
     today Date;
+    shippingfee Integer := 0;
+    cust_type Varchar(10) := Select CustType From Customer where custId = cust_id; 
     BEGIN
         orderid := OrderId_seq.nextVal;
         today := SYSDATE;
+        If (cust_type = 'Regular') Then
+            shippingfee = 10;
+        End If;
         INSERT INTO CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) 
-            values (CustId, orderid, today, NULL, 10);
+            values (cust_id, orderid, today, NULL, shippingfee);
         RETURN orderid;
     END;
 /
@@ -25,10 +30,3 @@ show errors;
 --    dbms_output.put_line('result from ceateCustOrder: ' || res);
 -- END;
 -- /
-
-DECLARE
-   res Integer;
-BEGIN
-   res := createCustOrder(4);
-END;
-/
