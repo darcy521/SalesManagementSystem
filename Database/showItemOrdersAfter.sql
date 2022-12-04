@@ -78,5 +78,5 @@ End;
 /
 
 
-execute showItemOrdersAfter(1, TO_DATE('2003/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'));
-Select * from fulldetailtable;  
+--execute showItemOrdersAfter(1, TO_DATE('2003/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'));
+--Select * from fulldetailtable;  

@@ -72,13 +72,13 @@ insert into GoldCustomer(CustId, DateJoined, Coupons) values (2, '26-Oct-2022', 
 
 
 -- tests 
-insert into CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) values (3, 5, '26-Oct-2022', NULL, 10);
+--insert into CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) values (3, 5, '26-Oct-2022', NULL, 10);
 
 --test ShippingFee_Trigger
-update Customer
-set CustType = 'Gold'
-where CustId = 3;
-
-update Customer
-set CustType = 'Regular'
-where CustId = 3;
+--update Customer
+--set CustType = 'Gold'
+--where CustId = 3;
+--
+--update Customer
+--set CustType = 'Regular'
+--where CustId = 3;

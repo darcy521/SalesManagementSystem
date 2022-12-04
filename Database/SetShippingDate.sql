@@ -6,5 +6,5 @@ CREATE OR REPLACE PROCEDURE setShippingDate(
 /
 show errors;
 
-execute setShippingDate (10000130, '30-NOV-22');
+--execute setShippingDate (10000130, '30-NOV-22');
 

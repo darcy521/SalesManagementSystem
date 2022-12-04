@@ -8,7 +8,7 @@ for each row
 Declare
 --    when it comes to multiple tuples in query, we need to create cursor to save them
     CURSOR Cust_id_Gold IS
-	Select CustId from Customer C 
+	Select CustId from Customer C
     Where C.CustType = 'Gold';
     
     CURSOR Cust_id_Regular IS

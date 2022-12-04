@@ -41,7 +41,7 @@ End;
 /
 
 
-execute createOrderLineItem(10000040, 104, 1, SYSDATE, 3, SYSDATE);
-execute createOrderLineItem(10000040, 110, 1, SYSDATE, 3, SYSDATE);
-execute createOrderLineItem(10000000, 107, 1, SYSDATE, 3, SYSDATE);
-execute createOrderLineItem(10000000, 105, 1, SYSDATE, 3, SYSDATE);
+--execute createOrderLineItem(10000040, 104, 1, SYSDATE, 3, SYSDATE);
+--execute createOrderLineItem(10000040, 110, 1, SYSDATE, 3, SYSDATE);
+--execute createOrderLineItem(10000000, 107, 1, SYSDATE, 3, SYSDATE);
+--execute createOrderLineItem(10000000, 105, 1, SYSDATE, 3, SYSDATE);

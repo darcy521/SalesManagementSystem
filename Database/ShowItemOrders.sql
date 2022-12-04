@@ -1,14 +1,3 @@
---Write a PLSQL procedure showItemOrders() that takes a custOrderId as a parameter and displays 
---the details of that CustOrder.  
---The details of a CustOrder should include the details of 
--- Customer, Items ordered, payment details. 
--- Customer details include custid, name, phone and address.  
--- Items Ordered details include Orderid, details of each Line item in the order, date Ordered and 
---      shipped date. 
--- Payment details include the total for all order line items, tax, shipping fee, any 
--- discount applied (in case of Gold Customers) and the grand total. 
-
-
 CREATE OR REPLACE PROCEDURE showItemOrders(order_id in Integer)
 IS 
     cid Integer;
@@ -79,5 +68,5 @@ End;
 /
 
 
-execute showItemOrders(5);
-Select * from fulldetailtable;  
+--execute showItemOrders(5);
+--Select * from fulldetailtable;  

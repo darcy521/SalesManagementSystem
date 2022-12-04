@@ -1,5 +1,3 @@
-Spool Table_Output;
-
 -- Item
 CREATE TABLE Item (
     ItemId Integer PRIMARY KEY,
@@ -45,19 +43,6 @@ CREATE TABLE CustOrder (
 
 Alter table CustOrder 
 add check (ShippedDate >= DateOfOrder);
--- ALTER TABLE CustOrder
--- ADD CONSTRAINT check_ShippingFee CHECK (get_GoldCustShippingFee() in 0);
-
--- CREATE OR REPLACE FUNCTION get_GoldCustShippingFee
--- RETURN Integer IS
---     tmp Integer := 0;
--- BEGIN
---     SELECT ShippingFee into tmp
---     from CustOrder
---     Where ( Select CustId from Customer  C Where C.CustType = 'Gold')= CustId;
---     return tmp;
--- END;
--- /
 
 --OrderLineItem
 CREATE TABLE OrderLineItem (
@@ -66,19 +51,6 @@ CREATE TABLE OrderLineItem (
     StoreItemsId Integer REFERENCES StoreItems(StoreItemsId),
     Quantity Integer
 );
-    --， CHECK (Quantity <=  get_NumberOfCopies(StoreItemsId))
---This function use to select the quantity of storeItems
--- CREATE OR REPLACE FUNCTION get_NumberOfCopies (n in Integer )
--- Return Integer IS
---     tmp Integer := 0;
--- Begin
---     Select NumberOfCopies into tmp 
---     from StoreItems si Where si.StoreItemsId = n;
---     Return tmp;
--- End;
--- /
-
--- Drop function get_NumberOfCopies;
 
 CREATE TABLE fullDetailTable(
     CUSTOMER_ID Integer,
@@ -101,14 +73,10 @@ CREATE TABLE fullDetailTable(
     PAYMENT_TOTAL Float
 );
 
-select * from fulldetailtable;
-Select * from StoreItems;
-Select * from Item;
-Select * from CustOrder;
---Delete from CustOrder 
---Where CustId = 3;
-Select * from Customer;
-Select * from GoldCustomer;
-Select * from OrderLineItem;
---Delete from OrderLineItem 
---Where OrderID = 2;
+--select * from fulldetailtable;
+--Select * from StoreItems;
+--Select * from Item;
+--Select * from CustOrder;
+--Select * from Customer;
+--Select * from GoldCustomer;
+--Select * from OrderLineItem;

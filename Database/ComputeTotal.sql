@@ -1,8 +1,3 @@
---Write a PLSQL function, computeTotal() that takes an orderid, 
---computes the total for that order and returns the total. 
---The total is the grand total price of all the OrderLineItems of this custorder. 
---The function should consider the customer type, tax, shipping fee etc, to compute the total.
-
 CREATE OR REPLACE Function computeTotal(Order_Id IN Integer)
 return Float
 IS
@@ -46,12 +41,12 @@ Begin
 End;
 /
 
---test function
-DECLARE
-    result float;
-Begin
-    result := computeTotal(5);
-    DBMS_OUTPUT.PUT_LINE('result of compute total is: ' || result);
-End;
-/
+----test function
+--DECLARE
+--    result float;
+--Begin
+--    result := computeTotal(5);
+--    DBMS_OUTPUT.PUT_LINE('result of compute total is: ' || result);
+--End;
+--/
 
