@@ -1,15 +1,4 @@
---Write a PLSQL procedure showItemOrders() that takes a custOrderId as a parameter and displays 
---the details of that CustOrder.  
---The details of a CustOrder should include the details of 
--- Customer, Items ordered, payment details. 
--- Customer details include custid, name, phone and address.  
--- Items Ordered details include Orderid, details of each Line item in the order, date Ordered and 
---      shipped date. 
--- Payment details include the total for all order line items, tax, shipping fee, any 
--- discount applied (in case of Gold Customers) and the grand total. 
-
-
-CREATE OR REPLACE PROCEDURE showItemOrders(order_id in Integer)
+CREATE OR REPLACE PROCEDURE showItemOrders(cust_id in Integer, after_date in Date)
 IS 
     cid Integer;
     cname VARCHAR(20);
@@ -23,7 +12,6 @@ IS
     iquantity Integer; -- ordered quantity
     itype VARCHAR(20);
     iprice Float;
-    itotal Float;
     praw Float;
     ptax Float;
     pshippingfee Float;
@@ -60,52 +48,18 @@ Begin
     For OrderItem_temp in orderitem_cursor LOOP
         iquantity := orderitem_temp.quantity;
         istoreitemid := orderitem_temp.storeitemsid;
-        
         -- storeitems find type, price
         select itemtype, price, itemid into itype, iprice, iid from storeitems 
             where storeitemsid = istoreitemid;
-        itotal := iquantity * iprice;
         -- item find title
         select title into ititle from item where itemid = iid;
         
         insert into fulldetailtable(CUSTOMER_ID, CUSTOMER_NAME, CUSTOMER_Email, CUSTOMER_Address,
         O_ID, ORDER_DATE, ORDER_SHIPPED_DATE, Item_StoreItemId, Item_Title, Item_Quantity,
-        Item_TYPE, Item_Price, Item_Total, PAYMENT_RAW, PAYMENT_TAX, PAYMENT_SHIPPING, PAYMENT_DISCOUNT, PAYMENT_TOTAL)
+        Item_TYPE, Item_Price, PAYMENT_RAW, PAYMENT_TAX, PAYMENT_SHIPPING, PAYMENT_DISCOUNT, PAYMENT_TOTAL)
         values (cid, cname, cemail, caddress, order_id, odate, oshippeddate, istoreitemid, 
-        ititle, iquantity, itype, iprice, itotal, praw, ptax, pshippingfee, pdiscount,ptotal);
+        ititle, iquantity, itype, iprice, praw, ptax, pshippingfee, pdiscount,ptotal);
     End LOOP;
     
 End;
 /
-
-
-execute showItemOrders(5);
-Select * from fulldetailtable;  
-
-
-
-
-
-
-
-
---    v1_ddl := 'DROP TABLE fullDetailTable';
---    EXECUTE IMMEDIATE v1_ddl;
---    v2_ddl := 'CREATE TABLE fullDetailTable(CUSTOMER_ID Integer,
---                  CUSTOMER_NAME VARCHAR(20), 
---                  CUSTOMER_Email VARCHAR(20),
---                  CUSTOMER_Address VARCHAR(50),
---                  O_ID Integer,
---                  ORDER_DATE DATE,
---                  ORDER_SHIPPED_DATE DATE,
---                  Item_StoreItemId Integer,
---                  Item_Title VARCHAR(25),
---                  Item_Quantity Integer, -- ordered quantity
---                  Item_TYPE VARCHAR(20),
---                  Item_Price Float,
---                  PAYMENT_RAW Float,
---                  PAYMENT_TAX Float,
---                  PAYMENT_SHIPPING Float,
---                  PAYMENT_DISCOUNT Float,
---                  PAYMENT_TOTAL Float)';
---    EXECUTE IMMEDIATE v2_ddl;

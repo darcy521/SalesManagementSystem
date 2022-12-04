@@ -93,6 +93,7 @@ CREATE TABLE fullDetailTable(
     Item_Quantity Integer, -- ordered quantity
     Item_TYPE VARCHAR(20),
     Item_Price Float,
+    Item_Total Float,
     PAYMENT_RAW Float,
     PAYMENT_TAX Float,
     PAYMENT_SHIPPING Float,
@@ -100,7 +101,7 @@ CREATE TABLE fullDetailTable(
     PAYMENT_TOTAL Float
 );
 
-
+select * from fulldetailtable;
 Select * from StoreItems;
 Select * from Item;
 Select * from CustOrder;
