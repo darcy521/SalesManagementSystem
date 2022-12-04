@@ -81,31 +81,3 @@ End;
 
 execute showItemOrders(5);
 Select * from fulldetailtable;  
-
-
-
-
-
-
-
-
---    v1_ddl := 'DROP TABLE fullDetailTable';
---    EXECUTE IMMEDIATE v1_ddl;
---    v2_ddl := 'CREATE TABLE fullDetailTable(CUSTOMER_ID Integer,
---                  CUSTOMER_NAME VARCHAR(20), 
---                  CUSTOMER_Email VARCHAR(20),
---                  CUSTOMER_Address VARCHAR(50),
---                  O_ID Integer,
---                  ORDER_DATE DATE,
---                  ORDER_SHIPPED_DATE DATE,
---                  Item_StoreItemId Integer,
---                  Item_Title VARCHAR(25),
---                  Item_Quantity Integer, -- ordered quantity
---                  Item_TYPE VARCHAR(20),
---                  Item_Price Float,
---                  PAYMENT_RAW Float,
---                  PAYMENT_TAX Float,
---                  PAYMENT_SHIPPING Float,
---                  PAYMENT_DISCOUNT Float,
---                  PAYMENT_TOTAL Float)';
---    EXECUTE IMMEDIATE v2_ddl;

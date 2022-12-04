@@ -19,7 +19,7 @@ Begin
 --If number of item ordered > stock -> display error and exit
     IF (numberOrdered > tmp) THEN
         dbms_output.put_line('Number of item Ordered is larger than stock, bookstore only has '
-        || tmp || 'copies');
+        || tmp || ' copies');
         return;
     END IF;
 
@@ -40,4 +40,8 @@ Begin
 End;
 /
 
-execute createOrderLineItem(5, 118, 3, SYSDATE, 3, SYSDATE);
+
+execute createOrderLineItem(10000040, 104, 1, SYSDATE, 3, SYSDATE);
+execute createOrderLineItem(10000040, 110, 1, SYSDATE, 3, SYSDATE);
+execute createOrderLineItem(10000000, 107, 1, SYSDATE, 3, SYSDATE);
+execute createOrderLineItem(10000000, 105, 1, SYSDATE, 3, SYSDATE);

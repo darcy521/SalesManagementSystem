@@ -107,10 +107,8 @@ Select * from Item;
 Select * from CustOrder;
 --Delete from CustOrder 
 --Where CustId = 3;
-
 Select * from Customer;
 Select * from GoldCustomer;
-
 Select * from OrderLineItem;
 --Delete from OrderLineItem 
 --Where OrderID = 2;
