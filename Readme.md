@@ -1,7 +1,7 @@
 Team members: </br>
 Honglin Chen, Jinming Nian  </br> </br>
 
-Note that "computeTotal" is not directly shown in the demo, but it is used in "ShowItemOrders" </br> </br>
+Note that the table "StoreItems" stores the general info about all items in the store, it specifies if the item is a "Comic Book" or "Movie". Whereas "Item" stores specific item info. Moreover, results of "computeTotal" is not directly shown in the demo, but it is called inside "ShowItemOrders" </br> </br>
 
 All constraints in 1.1 are fully implemented 
 

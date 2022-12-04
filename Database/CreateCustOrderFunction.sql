@@ -8,19 +8,19 @@ CREATE OR REPLACE FUNCTION createCustOrder(cust_id IN Integer) RETURN Integer IS
     orderid Integer;
     today Date;
     shippingfee Integer := 0;
-    cust_type Varchar(10) := Select CustType From Customer where custId = cust_id; 
+    cust_type Varchar(10); 
     BEGIN
         orderid := OrderId_seq.nextVal;
         today := SYSDATE;
+        Select CustType into cust_type From Customer where custId = cust_id;
         If (cust_type = 'Regular') Then
-            shippingfee = 10;
+            shippingfee := 10;
         End If;
         INSERT INTO CustOrder(CustId, OrderId, DateOfOrder, ShippedDate, ShippingFee) 
             values (cust_id, orderid, today, NULL, shippingfee);
         RETURN orderid;
     END;
 /
-show errors;
 
 -- executing the function
 -- DECLARE
