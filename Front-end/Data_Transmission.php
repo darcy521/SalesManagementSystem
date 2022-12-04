@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf8" />
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!-- <script src="jquery-3.6.1.min.js"></script> -->
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
@@ -11,17 +10,30 @@
    <body>
         <div class="storeItems">
         <!-- This form shows storeItems -->
-        <h3>Show StoreItems</h3>
+        <h3><?php 
+            if (isset($_POST['showTypes'])) 
+            {echo $_POST['showTypes'];} 
+            else {print "Please Select One option to browse ";}?>
+        </h3>
         <form name="createCustOrder-form" method="post" action="http://localhost/data_transmission.php?show=true">
-            <input type="submit" name="submit" value="show">
+            <select name = "showTypes" id="showTypes">
+                <option value="Please Select One option to browse" selected></option>
+                <option value="storeItems">storeItems</option>
+                <option value="items">items</option>
+                <option value="Customer">Customer</option>
+                <option value="Gold Customer">Gold Customer</option>
+                <option value="Customer Order">Customer Order</option>
+                <option value="OrderLineItem">OrderLineItem</option>
+            </select>
+            <input type="submit" name="submit" value="show" class="glow-on-hover">
             <?php 
-                if (isset($_GET['show'])) {
-                    showStoreItems();
+                if (isset($_POST['showTypes'])) {
+                    showTypes();
                 }
             ?>
         </form>
         <form method="POST" action="http://localhost/data_transmission.php">
-        <input type="submit" value="close"></form>
+        <input type="submit" value="close" class="glow-on-hover"></form>
         </div>
 
         <div class="createCustOrder">
@@ -36,7 +48,7 @@
             <!-- put OrderID here -->
             <!-- not implement yet -->
             <!-- <label>Your Order has been created!</label> -->
-            <input type="submit" name="customerId-submit" value="Submit">
+            <input type="submit" name="customerId-submit" value="Submit" class="glow-on-hover">
             <?php
                 if (isset($_GET['createNewOrder'])) {
                     createNewOrder();
@@ -96,7 +108,7 @@
 
             <!-- not implement yet -->
             <!-- <label>Your OrderLine Item has been created!</label> -->
-            <input type="submit" name="createOrderLineItem-submit" value="Submit">
+            <input type="submit" name="createOrderLineItem-submit" value="Submit" class="glow-on-hover">
             <?php
                 if (isset($_GET['createOrderLineItem'])) {
                     createOrderLineItem();
@@ -121,9 +133,8 @@
             <!-- put OrderID here -->
             <!-- not implement yet -->
             <!-- <label>Your Order has been created!</label> -->
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" class="glow-on-hover">
             <?php
-                echo isset($_GET['set']);
                 if (isset($_GET['set'])) {
                     setShippingDate();
                 }
@@ -142,7 +153,7 @@
             
             <!-- show Ordered Items here-->
             <!-- not implement yet -->
-            <input type="submit" name="submit" value="Submit">
+            <input type="submit" name="submit" value="Submit" class="glow-on-hover">
         </form>
         </div>
 
@@ -154,7 +165,6 @@
                 <label>Customer ID</label>
                 <input type="text" name="customerId-showOrder" placeholder="Please enter your ID" required>
             </div>
-            <p></p>
             <div>
                 <label>Date</label>
                 <input type="date" name="order-date" placeholder="Please enter date you want to search" required>
@@ -162,48 +172,186 @@
 
             <!-- Show Customer Order history here -->
             <!-- not implement yet -->
-            <input type="submit" name="submit" value="Submit">
+            <input type="submit" name="submit" value="Submit" class="glow-on-hover">
         </form>
         </div>
 
    </body>
 </html>
 <?php 
-function showStoreItems(){
+function showTypes(){
     //connect to your database. Type in your username, password and the DB path
-    $conn=oci_connect("c##123", "123", "//localhost/xe");
+    $conn=oci_connect("c##123", "123", "//localhost/xe", "UTF8");
     if(!$conn) {
             print "<br> connection failed:";       
         exit;
     }		
-    $query = oci_parse($conn, "SELECT * FROM StoreItems order by StoreItemsId");
+
+    if (isset($_POST['showTypes']) && $_POST['showTypes'] == "storeItems"){
+        $query = oci_parse($conn, "SELECT * FROM StoreItems order by StoreItemsId");
     
-    // Execute the query
-    oci_execute($query);
-    
-    echo "<table id='storeItems-table' border='1'>";
-        echo "<tr>";
-            echo "<td>StoreItemsId</td>";
-            echo "<td>ItemId</td>";
-            echo "<td>Price</td>";
-            echo "<td>ItemType</td>";
-            echo "<td>NumberOfCopies</td>";
-        echo "</tr>";
+        // Execute the query
+        oci_execute($query);
         
-    while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
-        echo "<tr>";
-            echo "<td>$row[0]</td>";
-            echo "<td>$row[1]</td>";
-            echo "<td>$row[2]</td>";
-            echo "<td>$row[3]</td>";
-            echo "<td>$row[4]</td>";
+        echo "<table id='storeItems-table' border='1' style='align:center; margin:auto;'>";
+            echo "<tr>";
+                echo "<td>StoreItemsId</td>";
+                echo "<td>ItemId</td>";
+                echo "<td>Price</td>";
+                echo "<td>ItemType</td>";
+                echo "<td>NumberOfCopies</td>";
             echo "</tr>";
+            
+        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+            echo "<tr>";
+                echo "<td>$row[0]</td>";
+                echo "<td>$row[1]</td>";
+                echo "<td>$row[2]</td>";
+                echo "<td>$row[3]</td>";
+                echo "<td>$row[4]</td>";
+                echo "</tr>";
+        }
+        echo "</table>";
+    } elseif (isset($_POST['showTypes']) && $_POST['showTypes'] == "Customer Order"){
+        $query = oci_parse($conn, "SELECT * FROM CustOrder order by CustId");
+    
+        // Execute the query
+        oci_execute($query);
+        
+        echo "<table border='1' style='align:center; margin:auto;'>";
+            echo "<tr>";
+                echo "<td>CustId</td>";
+                echo "<td>OrderId</td>";
+                echo "<td>Date Of Ordered</td>";
+                echo "<td>Shipped Date</td>";
+                echo "<td>Shipping Fee</td>";
+            echo "</tr>";
+            
+        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+            echo "<tr>";
+                for ($i = 0; $i <= 4; $i++){
+                    if (!empty($row[$i])){
+                        // if ($i = 2){
+                        //     echo gettype($row[$i]);
+                        // }
+                        echo "<td>$row[$i]</td>";
+                    } else {
+                        echo "<td></td>";
+                    }
+                }
+                // if ($row[0]){
+                //     echo "<td>$row[0]</td>";
+                // } else {
+                //     echo "<td></td>";
+                // }
+
+                // echo "<td>$row[1]</td>";
+                // echo "<td>$row[2]</td>";
+                // echo "<td>$row[3]</td>";
+                // echo "<td>$row[4]</td>";
+                echo "</tr>";
+        }
+        echo "</table>";
+    } elseif (isset($_POST['showTypes']) && $_POST['showTypes'] == "items"){
+        $query = oci_parse($conn, "SELECT * FROM Item");
+    
+        // Execute the query
+        oci_execute($query);
+        
+        echo "<table border='1' style='align:center; margin:auto;'>";
+            echo "<tr>";
+                echo "<td>ItemId</td>";
+                echo "<td>Title</td>";
+                echo "<td>Publish Date</td>";
+                echo "<td>Studio Name</td>";
+                echo "<td>Description</td>";
+            echo "</tr>";
+            
+        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+            echo "<tr>";
+                echo "<td>$row[0]</td>";
+                echo "<td>$row[1]</td>";
+                echo "<td>$row[2]</td>";
+                echo "<td>$row[3]</td>";
+                echo "<td>$row[4]</td>";
+                echo "</tr>";
+        }
+        echo "</table>";
+    } elseif (isset($_POST['showTypes']) && $_POST['showTypes'] == "Customer"){
+        $query = oci_parse($conn, "SELECT * FROM Customer");
+    
+        // Execute the query
+        oci_execute($query);
+        
+        echo "<table id='storeItems-table' border='1' style='align:center; margin:auto;'>";
+            echo "<tr>";
+                echo "<td>Customer ID</td>";
+                echo "<td>Name</td>";
+                echo "<td>Customer type</td>";
+                echo "<td>Email</td>";
+                echo "<td>Address</td>";
+            echo "</tr>";
+            
+        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+            echo "<tr>";
+                echo "<td>$row[0]</td>";
+                echo "<td>$row[1]</td>";
+                echo "<td>$row[2]</td>";
+                echo "<td>$row[3]</td>";
+                echo "<td>$row[4]</td>";
+                echo "</tr>";
+        }
+        echo "</table>";
+    } elseif (isset($_POST['showTypes']) && $_POST['showTypes'] == "Gold Customer"){
+        $query = oci_parse($conn, "SELECT * FROM GoldCustomer");
+    
+        // Execute the query
+        oci_execute($query);
+        
+        echo "<table border='1' style='align:center; margin:auto;'>";
+            echo "<tr>";
+                echo "<td>CustId</td>";
+                echo "<td>Date Joined</td>";
+                echo "<td>Coupons</td>";
+            echo "</tr>";
+            
+        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+            echo "<tr>";
+                echo "<td>$row[0]</td>";
+                echo "<td>$row[1]</td>";
+                echo "<td>$row[2]</td>";
+                echo "</tr>";
+        }
+        echo "</table>";
+    } elseif (isset($_POST['showTypes']) && $_POST['showTypes'] == "OrderLineItem"){
+        $query = oci_parse($conn, "SELECT * FROM OrderLineItem order by LineId");
+    
+        // Execute the query
+        oci_execute($query);
+        
+        echo "<table border='1' style='align:center; margin:auto;'>";
+            echo "<tr>";
+                echo "<td>OrderId</td>";
+                echo "<td>LineId</td>";
+                echo "<td>Store Items ID</td>";
+                echo "<td>Quantity</td>";
+            echo "</tr>";
+            
+        while (($row = oci_fetch_array($query, OCI_BOTH)) != false) {		
+            echo "<tr>";
+                echo "<td>$row[0]</td>";
+                echo "<td>$row[1]</td>";
+                echo "<td>$row[2]</td>";
+                echo "<td>$row[3]</td>";
+                echo "</tr>";
+        }
+        echo "</table>";
     }
-    echo "</table>";
+    
     OCILogoff($conn);	
 }
 function createNewOrder(){
-    $conn=oci_connect("c##123", "123", "//localhost/xe");
+    $conn=oci_connect("c##123", "123", "//localhost/xe", "UTF8");
     if(!$conn) {
             print "<br> connection failed:";       
         exit;
@@ -239,7 +387,7 @@ function createNewOrder(){
 
 
 function createOrderLineItem(){
-    $conn=oci_connect("c##123", "123", "//localhost/xe");
+    $conn=oci_connect("c##123", "123", "//localhost/xe", "UTF8");
     if(!$conn) {
             print "<br> connection failed:";       
         exit;
@@ -256,13 +404,7 @@ function createOrderLineItem(){
      $customerId = $_POST['customerId-createOrderLine'];
     //  $dateOrdered = date('d-M-Y', strtotime($_POST['OrderDate-createOrderLine']));
      $numberOrdered = $_POST['numberOrdered-createOrderLine'];
-    //  $shippedDate = date('d-M-Y',strtotime("+1 day", strtotime($dateOrdered)));
-    //  echo $CustOrderId, "<br>\n";
-    //  echo $storeitems_id, "<br>\n";
-    //  echo $customerId, "<br>\n";
-    //  echo $dateOrdered, "<br>\n";
-    //  echo $numberOrdered, "<br>\n";
-    //  echo $shippedDate, "<br>\n";
+
 
     // Bind the input parameter
     oci_bind_by_name($stmt,':custOrderId',$CustOrderId,15);
@@ -281,7 +423,9 @@ function createOrderLineItem(){
         echo $row[0], "\ncopy/copies<br>";
     } else if (oci_execute($stmt)){
     // output order information
-    echo "<table id='createNewOrderLineItem-table' border='1'>";
+    echo "<table id='createNewOrderLineItem-table' border='1'
+        style='align:center; margin:auto;'
+    >";
         echo "<tr>";
             echo "<td>Customer Order ID</td>";
             echo "<td>StoreItems ID</td>";
@@ -303,38 +447,44 @@ function createOrderLineItem(){
 }
 
 function setShippingDate(){
-    $conn=oci_connect("c##123", "123", "//localhost/xe");
+    $conn=oci_connect("c##123", "123", "//localhost/xe", "UTF8");
     if(!$conn) {
             print "<br> connection failed:";       
         exit;
     }		
 
-    $sql = "call setShippingDate(:id, to_date('12-Dec-22', 'DD-Mon-RR'))";
+    // Declare two dates
+    $start_date = strtotime(date("m/d/Y"));
+    $end_date = strtotime($_POST['ShippedDate']);
+    // Get the difference and divide into total no. seconds 60/60/24 to get
+    // number of days
+    $diff = ($end_date - $start_date)/60/60/24;
+    
+    // echo "Difference between two dates: "
+    //     . $diff, "\n<br>";
+
+    $sql = "call setShippingDate(:id, SYSDATE + $diff)";
     $stmt = oci_parse($conn,$sql);
     
      // Assign a value to the input 
      $OrderId = $_POST['orderId-setShippingDate'];
-     echo $_POST['ShippedDate'], "\n<br>";
-     echo date('d-M-y', strtotime($_POST['ShippedDate']));
-    //  $sdate = strval(date('d-M-y', strtotime($_POST['ShippedDate'])));
+     $date = date('d-M-y', strtotime($_POST['ShippedDate']));
+    //  echo $date;
+    //  $sdate = date('d-M-y', strtotime($_POST['ShippedDate']));
      
-    //  $dateOrdered = date('d-M-Y', strtotime($_POST['OrderDate-createOrderLine']));
-    //  $shippedDate = date('d-M-Y',strtotime("+1 day", strtotime($dateOrdered)));
-
     // Bind the input parameter
     oci_bind_by_name($stmt,':id',$OrderId,15);
-    // oci_bind_by_name($stmt,':sdate',$sdate,15);
     
     if (oci_execute($stmt)){
     // output order information
-    echo "<table id='createNewOrderLineItem-table' border='1'>";
+    echo "<table id='createNewOrderLineItem-table' border='1' style='text-align: center; margin: auto'>";
         echo "<tr>";
             echo "<td>Order ID</td>";
             echo "<td>Shipping Date</td>";
         echo "</tr>";	
         echo "<tr>";
             echo "<td>$OrderId</td>";
-            // echo "<td>$sdate</td>";
+            echo "<td>$date</td>";
             echo "</tr>";
     echo "</table>";
     print "Successfully set Shipping Date! \n";
