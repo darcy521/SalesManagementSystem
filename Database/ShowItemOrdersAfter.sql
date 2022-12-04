@@ -12,6 +12,7 @@ IS
     iquantity Integer; -- ordered quantity
     itype VARCHAR(20);
     iprice Float;
+    itotal Float;
     praw Float;
     ptax Float;
     pshippingfee Float;
