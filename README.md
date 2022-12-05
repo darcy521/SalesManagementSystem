@@ -12,3 +12,7 @@ All constraints in 1.1 are fully implemented
 - e. This is enforced in SetShippingDate and implemented in CustOrder table creation. Orders will be created without a shipping date, we think it is appropriate to add shipping date by using "SetShippingDate" after the order is successfully made. 
 - f. This is implemented in ShippingFee_Trigger.
 
+GUI Overview
+![GUI_Overview1](https://user-images.githubusercontent.com/94886510/205754594-6fa847b0-ad9f-4eee-a1a5-fd1a034ad91e.png)
+![GUI_Overview2 ](https://user-images.githubusercontent.com/94886510/205753653-0054b432-1bd1-43ed-abf7-ae028dde8cab.png)
+
